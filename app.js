@@ -32,7 +32,8 @@ const getImages = (query) => {
   fetch(`https://pixabay.com/api/?key=${KEY}=${query}&image_type=photo&pretty=true`)
     .then(response => response.json())
     .then(data => showImages(data.hits))
-    .catch(err => console.log(err))
+    // .catch(err => console.log(err))
+    .catch(err => dataLoadingError('Something went wrong, Please try again later'));
 }
 
 let slideIndex = 0;
@@ -133,12 +134,12 @@ const changeSlide = (index) => {
 searchBtn.addEventListener('click', function () {
   document.querySelector('.main').style.display = 'none';
   clearInterval(timer);
-  const search = document.getElementById('search');
+  const search = document.getElementById('search'); 
   getImages(search.value)
   sliders.length = 0;
+
   const errorText = document.getElementById('show-error');
   errorText.style.display = "none";
-
 
 })
 
@@ -162,3 +163,9 @@ function displayPopUp(show) {
   popUp.classList.toggle('d-none');
 }
 
+//Extra Feature 2
+// Data Loading Error 
+function dataLoadingError(err){
+  const dataError = document.getElementById('data-error');
+  dataError.innerText = err;
+}
